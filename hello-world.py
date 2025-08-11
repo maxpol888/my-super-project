@@ -1,1 +1,2 @@
-print('普里維特')
+# main code
+print("普里維特")
