@@ -1,4 +1,4 @@
 #! /bin/bash
 
 # run main program
-python3 ./hello-world.py
+python3 ./tetris.py
