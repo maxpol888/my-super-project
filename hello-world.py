@@ -1,1 +1,1 @@
-print('Hello!')
+print('普里維特')
