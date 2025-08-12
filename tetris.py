@@ -264,15 +264,33 @@ def game(stdscr):
     # Colors
     if curses.has_colors():
         curses.start_color()
+        # Try to enable default colors (safe to ignore errors)
+        try:
+            curses.use_default_colors()
+        except curses.error:
+            pass
+        BG = curses.COLOR_GREEN
         # Safe fallbacks; terminal may not support >7
         for i in range(1, 16):
             try:
-                curses.init_pair(i, i % 8, 0)
+                curses.init_pair(i, i % 8, BG)
             except curses.error:
                 try:
-                    curses.init_pair(i, i % 7 + 1, 0)
+                    curses.init_pair(i, i % 7 + 1, BG)
                 except curses.error:
                     pass
+        # Set overall background to green
+        try:
+            curses.init_pair(99, curses.COLOR_WHITE, BG)
+        except curses.error:
+            try:
+                curses.init_pair(99, 7, BG)
+            except curses.error:
+                pass
+        try:
+            stdscr.bkgd(" ", curses.color_pair(99))
+        except curses.error:
+            pass
 
     board = [[0 for _ in range(WIDTH)] for _ in range(HEIGHT)]
     current = new_piece()
